@@ -59,15 +59,7 @@ install_monitoring () {
   echo "pwd: $(pwd)"
   ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
-  'validator_name':'$VALIDATOR_NAME', \
-  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
-  'flat_path': 'True', \
-  'cluster_rpc_address':'$entry_point', \
-  'swap_file_size_gb': $SWAP_SIZE, \
-  'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  'solana_user': 'solana', 'set_validator_info': 'False' \
-  }"
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', 'validator_name':'$VALIDATOR_NAME', 'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', 'flat_path': 'True', 'cluster_rpc_address':'$entry_point', 'swap_file_size_gb': $SWAP_SIZE,'ramdisk_size_gb': $RAM_DISK_SIZE, 'solana_user': 'solana', 'set_validator_info': 'False', 'lvm_enabled': 'True' }"
 
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars 'host_hosts=local' --extra-vars "@/etc/sv_manager/sv_manager.conf"
 
